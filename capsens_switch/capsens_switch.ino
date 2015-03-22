@@ -7,9 +7,8 @@ int capSensePin = 2;
 //  to trigger a touch.  You'll find this number
 //  by trial and error, or you could take readings at
 //  the start of the program to dynamically calculate this.
-int touchedCutoff = 60;
+int touchedCutoff = 27;
 boolean on = false;
-int swon = 0;
 
 void setup() {
   Serial.begin(115200);
@@ -22,18 +21,15 @@ void loop() {
   // If the capacitive sensor reads above a certain threshold,
   //  turn on the LED
 
-  if (swon == 1) digitalWrite(LEDPin, HIGH);
-  else  digitalWrite(LEDPin, LOW);
-
   // Every 15 ms, print the value of the capacitive sensor
   if ( (millis() % 15) == 0) {
 
     if (readCapacitivePin(capSensePin) > touchedCutoff) {
+      digitalWrite(LEDPin, HIGH);
       if (!on) {
         on = true;
-        swon = (swon + 1) % 2;
         Serial.print("sw1:");
-        Serial.print(swon, DEC);
+        Serial.print(1, DEC);
         Serial.print(";");
         Serial.print("Cs1:");
         Serial.print(readCapacitivePin(capSensePin), DEC);
@@ -42,8 +38,13 @@ void loop() {
       }
     }
     else {
+      digitalWrite(LEDPin, LOW);
       if (on) {
         on = false;
+        Serial.print("sw1::");
+        Serial.print(0, DEC);
+        Serial.print(";");
+        Serial.println();
       }
     }
 
@@ -53,8 +54,6 @@ void loop() {
 /////////////////////////////
 /////----FUNCTIONS----//////
 ///////////////////////////
-
-
 // readCapacitivePin
 //  Input: Arduino pin number
 //  Output: A number, from 0 to 17 expressing
