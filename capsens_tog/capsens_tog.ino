@@ -12,7 +12,7 @@ boolean on = false;
 int swon = 0;
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   // Set up the LED
   pinMode(LEDPin, OUTPUT);
   digitalWrite(LEDPin, LOW);

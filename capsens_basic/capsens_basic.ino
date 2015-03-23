@@ -10,7 +10,7 @@ int capSensePin = 2;
 int touchedCutoff = 60;
 
 void setup(){
-  Serial.begin(115200);
+  Serial.begin(9600);
   // Set up the LED
   pinMode(LEDPin, OUTPUT);
   digitalWrite(LEDPin, LOW);
